@@ -1,0 +1,94 @@
+.woa_left-right-box{
+	box-sizing: border-box;
+	padding: 10px 0px;
+	position: relative;
+}
+
+.woa-ver-line{
+	position: absolute;
+	width: 2px;
+	height: 145px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -60%);
+	background: black;
+	z-index: -1;
+	border-radius: 4px;
+}
+
+.woa_left-right-box ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.woa_left-right-box ul li{
+	display: table;
+	margin: 20px auto;
+  height:130px;
+	position: relative;
+}
+
+.woa_left-right-box .woa-time-box{
+  display: table-cell;
+  vertical-align: top;
+  text-align: right;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 15px 35px;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.woa-time-box time{
+  display: block;
+}
+
+.woa_left-right-box .woa-content-box{
+  display: table-cell;
+  vertical-align: top;
+  text-align: left;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 15px 35px;
+}
+
+.woa_left-right-box ul li p{
+	font-size: 30px;
+	line-height: 42px;
+  margin:0;
+}
+
+
+.woa_left-right-box ul li:before{
+  position: absolute;
+	left: 48.30%;
+	content: '';
+	width: 25px;
+	height: 24px;
+	border-radius: 50%;
+	background: black;
+	top: 26%;
+}
+
+.woa-button-box{
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.woa-button-box a{
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0px 5px;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 5px 15px;
+  text-decoration-line: none !important;
+  text-decoration: none !important;
+  font-weight: 600;
+}
+
+.hidden_order_id_class{
+  display: none;
+}
