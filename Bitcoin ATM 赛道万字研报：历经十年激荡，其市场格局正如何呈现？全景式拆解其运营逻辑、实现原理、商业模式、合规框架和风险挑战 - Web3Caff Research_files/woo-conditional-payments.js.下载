@@ -1,0 +1,93 @@
+jQuery(document).ready(function($) {
+	function conditional_payments_trigger() {
+		if ( typeof conditional_payments_settings != 'undefined' ) {
+			$.each( conditional_payments_settings.name_address_fields, function( index, value ) {
+				$( document.body ).on( 'change', 'input[name="' + value + '"]', function() {
+					$( document.body ).trigger( 'update_checkout' );
+				} );
+
+				if ( value.indexOf('shipping_') !== -1 ) {
+					var billingValue = value.replace( 'shipping', 'billing' );
+					if ( $.inArray( billingValue, conditional_payments_settings.name_address_fields ) === -1 ) {
+						$( document.body ).on( 'change', 'input[name="' + billingValue + '"]', function() {
+							$( document.body ).trigger( 'update_checkout' );
+						} );
+					}
+				}
+			} );
+		}
+	}
+	conditional_payments_trigger();
+
+	/**
+	 * Trigger checkout update when changing payment method
+	 */
+	$( document.body ).on( 'change', 'input[name="payment_method"]', function() {
+		$( document.body ).trigger( 'update_checkout' );
+	} );
+
+	/**
+	 * Debug
+	 */
+	var wcpDebug = {
+		init: function() {
+			if ( ! conditional_payments_settings.debug_mode ) {
+				return;
+			}
+
+			this.toggleDebug();
+			this.setInitial();
+
+			var self = this;
+			$( document.body ).on( 'updated_checkout', function( data ) {
+				self.setInitial();
+			} );
+		},
+
+		/**
+		 * Toggle debug on click
+		 */
+		toggleDebug: function() {
+			var self = this;
+
+			$( document.body ).on( 'click', '#wcp-debug-header', function( e ) {
+				if ( $( '#wcp-debug-contents' ).is( ':visible' ) ) {
+					$( '#wcp-debug' ).toggleClass( 'closed', true );
+				} else {
+					$( '#wcp-debug' ).toggleClass( 'closed', false );
+				}
+
+				$( '#wcp-debug-contents' ).slideToggle( 200, function() {
+					self.saveStatus();
+				} );
+			} );
+		},
+
+		/**
+		 * Save debug open / closed status to cookies
+		 */
+		saveStatus: function() {
+			if ( typeof Cookies == 'undefined' ) {
+				return;
+			}
+
+			Cookies.set( 'wcp_debug_status', $( '#wcp-debug-contents' ).is( ':visible' ) );
+		},
+
+		/**
+		 * Set initial stage for debug
+		 */
+		setInitial: function() {
+			if ( typeof Cookies == 'undefined' ) {
+				return;
+			}
+
+			var status = Cookies.get( 'wcp_debug_status' );
+
+			$( '#wcp-debug-contents' ).toggle( status === 'true' );
+			$( '#wcp-debug' ).toggleClass( 'closed', $( '#wcp-debug-contents' ).is( ':hidden' ) );
+		}
+	}
+
+	wcpDebug.init();
+});
